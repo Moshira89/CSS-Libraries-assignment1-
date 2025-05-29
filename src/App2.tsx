@@ -14,7 +14,8 @@ const App2: React.FC = () => {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
-  const API_KEY = '33f3676a719069fdfef3fee0bb88c451';
+  const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+
 
 const fetchWeather = async () => {
   if (!city.trim()) return;
