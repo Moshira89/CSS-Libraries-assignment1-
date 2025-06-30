@@ -1,5 +1,8 @@
-@mixin responsive {
-  @media (max-width: 600px) {
-    @content;
-  }
+@use './variables' as vars;
+
+@mixin card-style {
+  background-color: white;
+  padding: vars.$padding;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

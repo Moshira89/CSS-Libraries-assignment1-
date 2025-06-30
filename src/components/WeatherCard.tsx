@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+import styles from '../styles/Weather.module.scss';
 
 type Props = {
   city: string;
@@ -8,16 +8,13 @@ type Props = {
   icon: string;
 };
 
-export const WeatherCard: React.FC<Props> = ({ city, temp, description, icon }) => (
-  <div className="weather-card">
-    <h2>{city}</h2>
-    <Image
-      src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
-      alt={description}
-      width={60}
-      height={60}
-    />
+const WeatherCard: React.FC<Props> = ({ city, temp, description, icon }) => (
+  <div className={styles.weatherCard}>
+    <h3>{city}</h3>
+    <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} alt={description} />
     <p>{description}</p>
     <p>{temp} °C</p>
   </div>
 );
+
+export default WeatherCard;
