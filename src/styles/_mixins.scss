@@ -1,8 +1,5 @@
-@use './variables' as vars;
-
-@mixin card-style {
-  background-color: white;
-  padding: vars.$padding;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+@mixin respond-to-mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
 }

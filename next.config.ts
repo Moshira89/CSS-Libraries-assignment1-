@@ -1,15 +1,19 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+// next.config.js
+module.exports = {
   images: {
-    remotePatterns: [
+    domains: ['openweathermap.org'],
+  },
+  async headers() {
+    return [
       {
-        protocol: 'https',
-        hostname: 'openweathermap.org',
-        port: '',
-        pathname: '/img/wn/**',
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+        ],
       },
-    ],
+    ];
   },
 };
-
-export default nextConfig;
