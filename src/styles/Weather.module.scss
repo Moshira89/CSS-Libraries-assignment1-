@@ -1,49 +1,26 @@
-@import './variables.scss';
-@import './mixins.scss';
+@use './variables' as vars;
+@use './mixins' as mixins;
+@use 'sass:color';
+@use 'sass:math';
 
-.weather-wrapper {
-  max-width: $max-width;
-  margin: 2rem auto;
-  padding: $spacing;
-  color: $text-color;
+.weatherWrapper {
+  max-width: vars.$max-width;
+  background-color: vars.$primary-color;
+  color: vars.$text-color;
+  border-radius: vars.$border-radius;
+  padding: vars.$spacing;
+  border: 1px solid color.adjust(vars.$primary-color, $lightness: 20%);
 
-  h2 {
-    color: $primary-color;
-    margin-bottom: $spacing;
-    text-align: center;
+  @include mixins.respond-to-mobile {
+    max-width: 80%;
+    padding: math.div(vars.$spacing, 2);
   }
+}
 
-  input {
-    width: 70%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid lighten($primary-color, 20%);
-    border-radius: $border-radius;
-    margin-right: 0.5rem;
-
-    @include respond-to-mobile {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 0.75rem;
-    }
-  }
-
-  button {
-    background-color: $primary-color;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border-radius: $border-radius;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: $primary-color-dark;
-    }
-
-    @include respond-to-mobile {
-      width: 100%;
-    }
-  }
+.card {
+  text-align: center;
+  padding: vars.$spacing;
+  background-color: color.adjust(vars.$primary-color, $lightness: -10%);
+  border-radius: vars.$border-radius;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

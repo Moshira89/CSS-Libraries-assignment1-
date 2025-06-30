@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import WeatherCard from '../../components/WeatherCard';
-import '../../styles/Weather.module.scss';
+import styles from '../../styles/Weather.module.scss';
 
 interface WeatherData {
   main: {
@@ -34,23 +34,25 @@ const Weather: React.FC = () => {
         return;
       }
 
-      const response = await axios.get(
+      const response = await axios.get<WeatherData>(
         `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
           city
         )}&units=metric&appid=${apiKey}`
       );
 
       setWeather(response.data);
-    } catch (error: any) {
+    } catch (error) {
+      const err = error as AxiosError;
+
       console.error('Fetch weather error:', {
-        message: error?.message,
-        response: error?.response?.data,
-        status: error?.response?.status,
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status,
       });
 
-      if (error?.response?.status === 404) {
+      if (err.response?.status === 404) {
         alert('City not found');
-      } else if (error?.response?.status === 401) {
+      } else if (err.response?.status === 401) {
         alert('Invalid API key or insufficient access. Use a valid key.');
       } else {
         alert('An error occurred. Check the console for more info.');
@@ -61,7 +63,7 @@ const Weather: React.FC = () => {
   };
 
   return (
-    <div className="weather-wrapper">
+    <div className={styles.weatherWrapper}>
       <h2>Weather Finder</h2>
       <input
         id="city-input"
