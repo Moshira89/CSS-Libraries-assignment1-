@@ -29,6 +29,8 @@ const Weather: React.FC = () => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
     console.log('API key:', apiKey); 
 
+
+
     if (!apiKey) {
       throw new Error('API key missing! Please add NEXT_PUBLIC_OPENWEATHER_API_KEY to .env.local');
     }
