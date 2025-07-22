@@ -10,18 +10,22 @@ interface Props {
 }
 
 const WeatherCard: React.FC<Props> = ({ city, temp, description, icon }) => {
+  const formattedDescription = description.charAt(0).toUpperCase() + description.slice(1);
+
   return (
     <div className={styles.card}>
       <h3>{city}</h3>
+
       <Image
         src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
         alt={description}
         width={100}
         height={100}
-        priority={true}
+        priority
       />
-      <p>{description}</p>
-      <p>{temp}°C</p>
+
+      <p>{formattedDescription}</p>
+      <p>{Math.round(temp)}°C</p>
     </div>
   );
 };

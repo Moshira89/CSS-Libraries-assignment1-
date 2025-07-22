@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import WeatherCard from '../../components/WeatherCard';
 import styles from '../../styles/Weather.module.scss';
 
@@ -26,40 +26,19 @@ const Weather: React.FC = () => {
       return;
     }
 
-    try {
-      const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
-      if (!apiKey) {
-        alert('API key missing! Please add NEXT_PUBLIC_OPENWEATHER_API_KEY to .env.local');
-        return;
-      }
-
-      const response = await axios.get<WeatherData>(
-        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-          city
-        )}&units=metric&appid=${apiKey}`
-      );
-
-      setWeather(response.data);
-    } catch (error) {
-      const err = error as AxiosError;
-
-      console.error('Fetch weather error:', {
-        message: err.message,
-        response: err.response?.data,
-        status: err.response?.status,
-      });
-
-      if (err.response?.status === 404) {
-        alert('City not found');
-      } else if (err.response?.status === 401) {
-        alert('Invalid API key or insufficient access. Use a valid key.');
-      } else {
-        alert('An error occurred. Check the console for more info.');
-      }
-
-      setWeather(null);
+    if (!apiKey) {
+      throw new Error('API key missing! Please add NEXT_PUBLIC_OPENWEATHER_API_KEY to .env.local');
     }
+
+    const response = await axios.get<WeatherData>(
+      `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+        city
+      )}&units=metric&appid=${apiKey}`
+    );
+
+    setWeather(response.data);
   };
 
   return (
